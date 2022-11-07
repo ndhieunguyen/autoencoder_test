@@ -47,6 +47,7 @@ def build_model(bert_model):
 def get_text_encoder_model_tf(dir_pytorch_model='distilroberta-base', dir_config='distilroberta-base'):
     bert_model = convert_tfmodel(dir_pytorch_model, dir_config)
     model = build_model(bert_model)
+    
     for layer in model.layers:
         layer.trainable = False
     return model

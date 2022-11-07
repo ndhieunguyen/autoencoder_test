@@ -35,9 +35,10 @@ def create_model():
 
     loss = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)(output_image, image_decoder)
 
-    return tf.keras.models.Model(inputs=[input_image, text_encoder.input[0], text_encoder.input[1], output_image], outputs=loss)
-
-
-if __name__ == '__main__':
-    model = create_model()
-    print(model.summary())
+    return Model(inputs={'input_image': input_image, 
+                        'input_text_id': text_encoder.input[0], 
+                        'input_text_mask': text_encoder.input[1], 
+                        'output_image': output_image}, 
+                outputs={'loss': loss, 
+                        'image_encoder': image_encoder, 
+                        'image_decoder':image_decoder}) 
